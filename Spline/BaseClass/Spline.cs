@@ -68,7 +68,7 @@ namespace Spline {
             if(ReferenceEquals(s1, s2)) {
                 return true;
             }
-            if((object)s1 == null || (object)s2 == null) {
+            if(s1 is null || s2 is null) {
                 return false;
             }
             if(s1.EndType != s2.EndType) {
