@@ -1,17 +1,17 @@
-# Integral
- Romberg Integral Implementation
+# Spline
+ Cubic Spline Implementation
 
 ## Requirement
  .NET Standard 2.0
  
  ## Install
-[Download DLL](https://github.com/tk-yoshimura/Integral/releases)
+[Download DLL](https://github.com/tk-yoshimura/Spline/releases)
 
 - To install, just import the DLL.
 - This library does not change the environment at all.
 
 ## Licence
-[MIT](https://github.com/tk-yoshimura/Integral/blob/master/LICENSE)
+[MIT](https://github.com/tk-yoshimura/Spline/blob/master/LICENSE)
 
 ## Author
 
