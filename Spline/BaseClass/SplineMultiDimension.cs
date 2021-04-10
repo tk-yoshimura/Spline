@@ -9,12 +9,12 @@ namespace Spline {
 
         /// <summary>コンストラクタ</summary>
         public SplineMultiDimension(int dimention, EndType type = EndType.Open) {
-            if(dimention <= 0) {
-                throw new ArgumentException();
+            if (dimention <= 0) {
+                throw new ArgumentOutOfRangeException(nameof(dimention));
             }
 
             this.spline = new SplineType[dimention];
-            for(int i = 0; i < spline.Length; i++) {
+            for (int i = 0; i < spline.Length; i++) {
                 this.spline[i] = Spline.Construct<SplineType>(type);
             }
             this.Dimention = dimention;
@@ -28,8 +28,8 @@ namespace Spline {
 
         /// <summary>制御点を設定</summary>
         public void Set(params Vector[] v) {
-            if(v == null) {
-                throw new ArgumentNullException();
+            if (v is null) {
+                throw new ArgumentNullException(nameof(v));
             }
 
             Set(v, v.Length);
@@ -39,20 +39,20 @@ namespace Spline {
         public void Set(Vector[] v, int points) {
             Initialize();
 
-            if(v == null) {
-                throw new ArgumentNullException();
+            if (v is null) {
+                throw new ArgumentNullException(nameof(v));
             }
 
-            for(int i = 0; i < points; i++) {
-                if(v[i].Dim != Dimention) {
-                    throw new ArgumentException();
+            for (int i = 0; i < points; i++) {
+                if (v[i].Dim != Dimention) {
+                    throw new ArgumentException("mismatch dimention", nameof(v));
                 }
             }
 
             double[] s = new double[points];
 
-            for(int i = 0, j; i < Dimention; i++) {
-                for(j = 0; j < points; j++) {
+            for (int i = 0, j; i < Dimention; i++) {
+                for (j = 0; j < points; j++) {
                     s[j] = v[j][i];
                 }
 
@@ -62,29 +62,29 @@ namespace Spline {
 
         /// <summary>制御点を挿入</summary>
         public void Insert(int index, Vector new_v) {
-            if(index < 0 || index > Points || new_v.Dim != Dimention) {
-                throw new ArgumentException();
+            if (index < 0 || index > Points || new_v.Dim != Dimention) {
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            for(int i = 0; i < Dimention; i++) {
+            for (int i = 0; i < Dimention; i++) {
                 this.spline[i].Insert(index, new_v[i]);
             }
         }
 
         /// <summary>制御点を除去</summary>
         public void Remove(int index) {
-            if(index < 0 || index >= Points) {
-                throw new ArgumentException();
+            if (index < 0 || index >= Points) {
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            for(int i = 0; i < Dimention; i++) {
+            for (int i = 0; i < Dimention; i++) {
                 this.spline[i].Remove(index);
             }
         }
 
         /// <summary>初期化</summary>
         public void Initialize() {
-            for(int i = 0; i < spline.Length; i++) {
+            for (int i = 0; i < spline.Length; i++) {
                 spline[i].Initialize();
             }
         }
@@ -93,7 +93,7 @@ namespace Spline {
         public Vector Value(double t) {
             double[] v = new double[Dimention];
 
-            for(int i = 0; i < Dimention; i++) {
+            for (int i = 0; i < Dimention; i++) {
                 v[i] = spline[i].Value(t);
             }
 
@@ -104,7 +104,7 @@ namespace Spline {
         public Vector Diff(double t) {
             double[] v = new double[Dimention];
 
-            for(int i = 0; i < Dimention; i++) {
+            for (int i = 0; i < Dimention; i++) {
                 v[i] = spline[i].Diff(t);
             }
 
@@ -115,7 +115,7 @@ namespace Spline {
         public Vector Diff(double t, uint n) {
             double[] v = new double[Dimention];
 
-            for(int i = 0; i < Dimention; i++) {
+            for (int i = 0; i < Dimention; i++) {
                 v[i] = spline[i].Diff(t, n);
             }
 
@@ -124,17 +124,17 @@ namespace Spline {
 
         /// <summary>等しいか判定</summary>
         public static bool operator ==(SplineMultiDimension<SplineType> s1, SplineMultiDimension<SplineType> s2) {
-            if(ReferenceEquals(s1, s2)) {
+            if (ReferenceEquals(s1, s2)) {
                 return true;
             }
-            if(s1 is null || s2 is null) {
+            if (s1 is null || s2 is null) {
                 return false;
             }
-            if(s1.Dimention != s2.Dimention) {
+            if (s1.Dimention != s2.Dimention) {
                 return false;
             }
-            for(int i = 0; i < s1.Dimention; i++) {
-                if(s1.spline[i] != s2.spline[i]) {
+            for (int i = 0; i < s1.Dimention; i++) {
+                if (s1.spline[i] != s2.spline[i]) {
                     return false;
                 }
             }
@@ -148,7 +148,7 @@ namespace Spline {
 
         /// <summary>等しいか判定</summary>
         public override bool Equals(object obj) {
-            return obj is SplineMultiDimension<SplineType> ? (SplineMultiDimension<SplineType>)obj == this : false;
+            return (!(obj is null)) && obj is SplineMultiDimension<SplineType> dimspline && dimspline == this;
         }
 
         /// <summary>ハッシュ値</summary>

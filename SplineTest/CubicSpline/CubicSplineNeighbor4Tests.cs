@@ -7,15 +7,15 @@ using System.Linq;
 namespace SplineTests {
     [TestClass()]
     public class CubicSplineNeighbor4Tests {
-        double[] v1 = { 12, 15, 15, 10,  10, 10, 10.5, 15, 50, 60, 85 };
+        readonly double[] v1 = { 12, 15, 15, 10, 10, 10, 10.5, 15, 50, 60, 85 };
 
         [TestMethod()]
         public void InsertTest1() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp3 = new AkimaSpline(EndType.Open);
+            AkimaSpline sp1 = new(EndType.Open);
+            AkimaSpline sp2 = new(EndType.Open);
+            AkimaSpline sp3 = new(EndType.Open);
 
-            for(int i = 0; i < v1.Length; i++) {
+            for (int i = 0; i < v1.Length; i++) {
                 sp1.Set(v1, i + 1);
                 sp2.Insert(i, v1[i]);
 
@@ -30,11 +30,11 @@ namespace SplineTests {
 
         [TestMethod()]
         public void InsertTest2() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp3 = new AkimaSpline(EndType.Open);
+            AkimaSpline sp1 = new(EndType.Open);
+            AkimaSpline sp2 = new(EndType.Open);
+            AkimaSpline sp3 = new(EndType.Open);
 
-            for(int i = 0; i < v1.Length; i++) {
+            for (int i = 0; i < v1.Length; i++) {
                 sp1.Set(v1.Skip(v1.Length - i - 1).ToArray(), i + 1);
                 sp2.Insert(0, v1[v1.Length - i - 1]);
 
@@ -49,14 +49,14 @@ namespace SplineTests {
 
         [TestMethod()]
         public void InsertTest3() {
-            for(int test = 0; test < 100; test++) {
-                AkimaSpline sp1 = new AkimaSpline(EndType.Open);
-                AkimaSpline sp2 = new AkimaSpline(EndType.Open);
+            for (int test = 0; test < 100; test++) {
+                AkimaSpline sp1 = new(EndType.Open);
+                AkimaSpline sp2 = new(EndType.Open);
 
-                List<double> v2 = new List<double>();
-                Random random = new Random(test);
+                List<double> v2 = new();
+                Random random = new(test);
 
-                for(int i = 0; i < 100; i++) {
+                for (int i = 0; i < 100; i++) {
                     int index = random.Next(i + 1);
                     double new_v = random.NextDouble();
 
@@ -72,11 +72,11 @@ namespace SplineTests {
 
         [TestMethod()]
         public void InsertTest4() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Close);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Close);
-            AkimaSpline sp3 = new AkimaSpline(EndType.Close);
+            AkimaSpline sp1 = new(EndType.Close);
+            AkimaSpline sp2 = new(EndType.Close);
+            AkimaSpline sp3 = new(EndType.Close);
 
-            for(int i = 0; i < v1.Length; i++) {
+            for (int i = 0; i < v1.Length; i++) {
                 sp1.Set(v1, i + 1);
                 sp2.Insert(i, v1[i]);
 
@@ -91,11 +91,11 @@ namespace SplineTests {
 
         [TestMethod()]
         public void InsertTest5() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Close);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Close);
-            AkimaSpline sp3 = new AkimaSpline(EndType.Close);
+            AkimaSpline sp1 = new(EndType.Close);
+            AkimaSpline sp2 = new(EndType.Close);
+            AkimaSpline sp3 = new(EndType.Close);
 
-            for(int i = 0; i < v1.Length; i++) {
+            for (int i = 0; i < v1.Length; i++) {
                 sp1.Set(v1.Skip(v1.Length - i - 1).ToArray(), i + 1);
                 sp2.Insert(0, v1[v1.Length - i - 1]);
 
@@ -110,14 +110,14 @@ namespace SplineTests {
 
         [TestMethod()]
         public void InsertTest6() {
-            for(int test = 0; test < 100; test++) {
-                AkimaSpline sp1 = new AkimaSpline(EndType.Close);
-                AkimaSpline sp2 = new AkimaSpline(EndType.Close);
+            for (int test = 0; test < 100; test++) {
+                AkimaSpline sp1 = new(EndType.Close);
+                AkimaSpline sp2 = new(EndType.Close);
 
-                List<double> v2 = new List<double>();
-                Random random = new Random(test);
+                List<double> v2 = new();
+                Random random = new(test);
 
-                for(int i = 0; i < 100; i++) {
+                for (int i = 0; i < 100; i++) {
                     int index = random.Next(i + 1);
                     double new_v = random.NextDouble();
 
@@ -133,14 +133,14 @@ namespace SplineTests {
 
         [TestMethod()]
         public void RemoveTest1() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Open);
+            AkimaSpline sp1 = new(EndType.Open);
+            AkimaSpline sp2 = new(EndType.Open);
 
             List<double> v3 = v1.ToList();
 
             sp2.Set(v3.ToArray());
 
-            while(v3.Count > 0) {
+            while (v3.Count > 0) {
                 v3.RemoveAt(0);
 
                 sp1.Set(v3.ToArray());
@@ -152,14 +152,14 @@ namespace SplineTests {
 
         [TestMethod()]
         public void RemoveTest2() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Open);
+            AkimaSpline sp1 = new(EndType.Open);
+            AkimaSpline sp2 = new(EndType.Open);
 
             List<double> v3 = v1.ToList();
 
             sp2.Set(v3.ToArray());
 
-            while(v3.Count > 0) {
+            while (v3.Count > 0) {
                 v3.RemoveAt(v3.Count - 1);
 
                 sp1.Set(v3.ToArray());
@@ -171,16 +171,16 @@ namespace SplineTests {
 
         [TestMethod()]
         public void RemoveTest3() {
-            for(int test = 0; test < 100; test++) {
-                AkimaSpline sp1 = new AkimaSpline(EndType.Open);
-                AkimaSpline sp2 = new AkimaSpline(EndType.Open);
+            for (int test = 0; test < 100; test++) {
+                AkimaSpline sp1 = new(EndType.Open);
+                AkimaSpline sp2 = new(EndType.Open);
 
-                Random random = new Random(test);
+                Random random = new(test);
                 List<double> v3 = (new double[100]).Select((_) => random.NextDouble()).ToList();
 
                 sp2.Set(v3.ToArray());
 
-                while(v3.Count > 0) {
+                while (v3.Count > 0) {
                     int index = random.Next(v3.Count);
                     v3.RemoveAt(index);
 
@@ -194,14 +194,14 @@ namespace SplineTests {
 
         [TestMethod()]
         public void RemoveTest4() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Close);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Close);
+            AkimaSpline sp1 = new(EndType.Close);
+            AkimaSpline sp2 = new(EndType.Close);
 
             List<double> v3 = v1.ToList();
 
             sp2.Set(v3.ToArray());
 
-            while(v3.Count > 0) {
+            while (v3.Count > 0) {
                 v3.RemoveAt(0);
 
                 sp1.Set(v3.ToArray());
@@ -213,14 +213,14 @@ namespace SplineTests {
 
         [TestMethod()]
         public void RemoveTest5() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Close);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Close);
+            AkimaSpline sp1 = new(EndType.Close);
+            AkimaSpline sp2 = new(EndType.Close);
 
             List<double> v3 = v1.ToList();
 
             sp2.Set(v3.ToArray());
 
-            while(v3.Count > 0) {
+            while (v3.Count > 0) {
                 v3.RemoveAt(v3.Count - 1);
 
                 sp1.Set(v3.ToArray());
@@ -232,16 +232,16 @@ namespace SplineTests {
 
         [TestMethod()]
         public void RemoveTest6() {
-            for(int test = 0; test < 100; test++) {
-                AkimaSpline sp1 = new AkimaSpline(EndType.Close);
-                AkimaSpline sp2 = new AkimaSpline(EndType.Close);
+            for (int test = 0; test < 100; test++) {
+                AkimaSpline sp1 = new(EndType.Close);
+                AkimaSpline sp2 = new(EndType.Close);
 
-                Random random = new Random(test);
+                Random random = new(test);
                 List<double> v3 = (new double[100]).Select((_) => random.NextDouble()).ToList();
 
                 sp2.Set(v3.ToArray());
 
-                while(v3.Count > 0) {
+                while (v3.Count > 0) {
                     int index = random.Next(v3.Count);
                     v3.RemoveAt(index);
 
@@ -255,16 +255,16 @@ namespace SplineTests {
 
         [TestMethod()]
         public void SetPointTest1() {
-            for(int test = 0; test < 10; test++) {
-                AkimaSpline sp1 = new AkimaSpline(EndType.Open);
-                AkimaSpline sp2 = new AkimaSpline(EndType.Open);
+            for (int test = 0; test < 10; test++) {
+                AkimaSpline sp1 = new(EndType.Open);
+                AkimaSpline sp2 = new(EndType.Open);
 
-                Random random = new Random(test);
+                Random random = new(test);
                 double[] v2 = (double[])v1.Clone();
 
                 sp2.Set(v2);
 
-                for(int i = 0; i < v1.Length; i++) {
+                for (int i = 0; i < v1.Length; i++) {
                     double set_v = random.NextDouble();
 
                     v2[i] = set_v;
@@ -279,16 +279,16 @@ namespace SplineTests {
 
         [TestMethod()]
         public void SetPointTest2() {
-            for(int test = 0; test < 10; test++) {
-                AkimaSpline sp1 = new AkimaSpline(EndType.Close);
-                AkimaSpline sp2 = new AkimaSpline(EndType.Close);
+            for (int test = 0; test < 10; test++) {
+                AkimaSpline sp1 = new(EndType.Close);
+                AkimaSpline sp2 = new(EndType.Close);
 
-                Random random = new Random(test);
+                Random random = new(test);
                 double[] v2 = (double[])v1.Clone();
 
                 sp2.Set(v2);
 
-                for(int i = 0; i < v1.Length; i++) {
+                for (int i = 0; i < v1.Length; i++) {
                     double set_v = random.NextDouble();
 
                     v2[i] = set_v;

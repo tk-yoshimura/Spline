@@ -19,23 +19,23 @@ namespace Spline {
         public sealed override void Set(double[] v, int points) {
             Initialize();
 
-            if(points == 0) {
+            if (points == 0) {
                 return;
             }
 
-            if(v == null || v.Length <= 0 || v.Length < points) {
-                throw new ArgumentException();
+            if (v == null || v.Length <= 0 || v.Length < points) {
+                throw new ArgumentException(nameof(v));
             }
 
             this.v.AddRange(v.Take(points));
 
             segment_list = new List<CubicSegment>(points);
 
-            for(int i = 0; i < points; i++) {
+            for (int i = 0; i < points; i++) {
                 segment_list.Add(new CubicSegment());
             }
 
-            for(int i = 0; i < Points; i++) {
+            for (int i = 0; i < Points; i++) {
                 ReflashSegment(i);
             }
         }
@@ -48,13 +48,13 @@ namespace Spline {
 
         /// <summary>補間値</summary>
         public sealed override double Value(double t) {
-            if(Points <= 0 || double.IsNaN(t) || double.IsInfinity(t)) {
+            if (Points <= 0 || double.IsNaN(t) || double.IsInfinity(t)) {
                 return double.NaN;
             }
 
-            if(EndType == EndType.Open) {
+            if (EndType == EndType.Open) {
                 int pos = t < (Points - 1) ? (int)t : (Points - 1);
-                if(t >= 0) {
+                if (t >= 0) {
                     double h = t - pos;
                     return segment_list[pos].Value(h);
                 }
@@ -69,13 +69,13 @@ namespace Spline {
 
         /// <summary>補間微分値</summary>
         public sealed override double Diff(double t) {
-            if(Points <= 0 || double.IsNaN(t) || double.IsInfinity(t)) {
+            if (Points <= 0 || double.IsNaN(t) || double.IsInfinity(t)) {
                 return double.NaN;
             }
 
-            if(EndType == EndType.Open) {
+            if (EndType == EndType.Open) {
                 int pos = t < (Points - 1) ? (int)t : (Points - 1);
-                if(t >= 0) {
+                if (t >= 0) {
                     double h = t - pos;
                     return segment_list[pos].Diff(h);
                 }
@@ -90,20 +90,20 @@ namespace Spline {
 
         /// <summary>補間N次微分値</summary>
         public sealed override double Diff(double t, uint n) {
-            if(Points <= 0 || double.IsNaN(t) || double.IsInfinity(t)) {
+            if (Points <= 0 || double.IsNaN(t) || double.IsInfinity(t)) {
                 return double.NaN;
             }
 
-            if(EndType == EndType.Open) {
-                if(n == 0)
+            if (EndType == EndType.Open) {
+                if (n == 0)
                     return Value(t);
-                if(n == 1)
+                if (n == 1)
                     return Diff(t);
-                if(n > 3)
+                if (n > 3)
                     return 0;
 
                 int pos = t < (Points - 1) ? (int)t : (Points - 1);
-                if(t >= 0) {
+                if (t >= 0) {
                     double h = t - pos;
                     return segment_list[pos].Diff(h, n);
                 }
@@ -121,24 +121,24 @@ namespace Spline {
 
         /// <summary>区間更新</summary>
         protected void ReflashSegment(int index) {
-            if(Points <= 1) {
+            if (Points <= 1) {
                 segment_list[0] = CubicSegment.Constant(v[0]);
                 return;
             }
 
-            if(EndType == EndType.Close) {
+            if (EndType == EndType.Close) {
                 index = (index % Points + Points) % Points;
             }
 
-            if(index < 0 || index >= Points) {
+            if (index < 0 || index >= Points) {
                 return;
             }
 
-            if(EndType == EndType.Open) {
-                if(index == 0) {
+            if (EndType == EndType.Open) {
+                if (index == 0) {
                     segment_list[0] = CubicSegment.LeftEnd(v[0], v[1], Grad(1));
                 }
-                else if(index >= Points - 2) {
+                else if (index >= Points - 2) {
                     segment_list[Points - 2] = CubicSegment.RightEnd(v[Points - 2], v[Points - 1], Grad(Points - 2));
 
                     double g = segment_list[Points - 2].b + 2 * segment_list[Points - 2].c;
@@ -149,7 +149,7 @@ namespace Spline {
                 }
             }
             else {
-                if(index == Points - 1) {
+                if (index == Points - 1) {
                     segment_list[Points - 1] = CubicSegment.Interval(v[Points - 1], v[0], Grad(Points - 1), Grad(0));
                 }
                 else {
@@ -160,12 +160,12 @@ namespace Spline {
 
         /// <summary>等しいか判定</summary>
         public static bool operator ==(CubicSpline s1, CubicSpline s2) {
-            if((Spline)s1 != (Spline)s2) {
+            if ((Spline)s1 != (Spline)s2) {
                 return false;
             }
 
-            for(int i = 0, Points = s1.segment_list.Count; i < Points; i++) {
-                if(s1.segment_list[i] != s2.segment_list[i]) {
+            for (int i = 0, Points = s1.segment_list.Count; i < Points; i++) {
+                if (s1.segment_list[i] != s2.segment_list[i]) {
                     return false;
                 }
             }
@@ -179,7 +179,7 @@ namespace Spline {
 
         /// <summary>等しいか判定</summary>
         public override bool Equals(object obj) {
-            return obj is CubicSpline ? (CubicSpline)obj == this : false;
+            return (!(obj is null)) && obj is CubicSpline spline && spline == this;
         }
 
         /// <summary>ハッシュ値</summary>

@@ -65,13 +65,13 @@ namespace Spline {
 
         /// <summary>等しいか判定</summary>
         public static bool operator ==(Spline s1, Spline s2) {
-            if(ReferenceEquals(s1, s2)) {
+            if (ReferenceEquals(s1, s2)) {
                 return true;
             }
-            if(s1 is null || s2 is null) {
+            if (s1 is null || s2 is null) {
                 return false;
             }
-            if(s1.EndType != s2.EndType) {
+            if (s1.EndType != s2.EndType) {
                 return false;
             }
 
@@ -85,7 +85,7 @@ namespace Spline {
 
         /// <summary>等しいか判定</summary>
         public override bool Equals(object obj) {
-            return obj is Spline ? (Spline)obj == this : false;
+            return (!(obj is null)) && obj is Spline spline && spline == this;
         }
 
         /// <summary>ハッシュ値</summary>

@@ -4,12 +4,12 @@ using Spline;
 namespace SplineTests {
     [TestClass()]
     public class CubicSplineTests {
-        double[] v1 = { 12, 15, 15, 10,  10, 10, 10.5, 15, 50, 60, 85 };
+        readonly double[] v1 = { 12, 15, 15, 10, 10, 10, 10.5, 15, 50, 60, 85 };
 
         [TestMethod()]
         public void InitializeTest() {
-            CatmullRomSpline sp1 = new CatmullRomSpline(EndType.Close);
-            CatmullRomSpline sp2 = new CatmullRomSpline(EndType.Close);
+            CatmullRomSpline sp1 = new(EndType.Close);
+            CatmullRomSpline sp2 = new(EndType.Close);
 
             sp2.Set(v1);
             sp2.Initialize();
@@ -24,12 +24,12 @@ namespace SplineTests {
 
         [TestMethod()]
         public void EqualTest() {
-            AkimaSpline sp1 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp2 = new AkimaSpline(EndType.Close);
-            AkimaSpline sp3 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp4 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp5 = new AkimaSpline(EndType.Open);
-            AkimaSpline sp6 = new AkimaSpline(EndType.Open);
+            AkimaSpline sp1 = new(EndType.Open);
+            AkimaSpline sp2 = new(EndType.Close);
+            AkimaSpline sp3 = new(EndType.Open);
+            AkimaSpline sp4 = new(EndType.Open);
+            AkimaSpline sp5 = new(EndType.Open);
+            AkimaSpline sp6 = new(EndType.Open);
 
             sp1.Set(12, 15, 15, 10, 10, 10, 10.5, 15, 50, 60, 85);
             sp2.Set(12, 15, 15, 10, 10, 10, 10.5, 15, 50, 60, 85);
@@ -38,11 +38,13 @@ namespace SplineTests {
             sp5.Set(12, 15, 15, 10, 10, 10, 10.5, 15, 50, 60, 85, 90);
             sp6.Set(12, 15, 15, 10, 10, 10, 10.5, 15, 50, 60, 85);
 
-            Assert.AreEqual(sp1 != sp2, true);
-            Assert.AreEqual(sp1 != sp3, true);
-            Assert.AreEqual(sp1 != sp4, true);
-            Assert.AreEqual(sp1 != sp5, true);
-            Assert.AreEqual(sp1 == sp6, true);
+            Assert.IsTrue(sp1 != sp2);
+            Assert.IsTrue(sp1 != sp3);
+            Assert.IsTrue(sp1 != sp4);
+            Assert.IsTrue(sp1 != sp5);
+            Assert.IsTrue(sp1 == sp6);
+            Assert.IsTrue(sp1 != null);
+            Assert.IsFalse(sp1 == null);
         }
     }
 }

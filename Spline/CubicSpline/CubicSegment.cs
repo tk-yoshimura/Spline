@@ -73,11 +73,11 @@
 
         /// <summary>補間N次微分値</summary>
         public double Diff(double t, uint n) {
-            if(n == 0)
+            if (n == 0)
                 return Value(t);
-            if(n == 1)
+            if (n == 1)
                 return Diff(t);
-            if(n > 3)
+            if (n > 3)
                 return 0;
 
             return (n == 2) ? (2 * c + t * 6 * d) : (6 * d);
