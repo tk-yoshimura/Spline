@@ -85,7 +85,7 @@ namespace Spline {
 
         /// <summary>等しいか判定</summary>
         public override bool Equals(object obj) {
-            return (!(obj is null)) && obj is Spline spline && spline == this;
+            return (obj is not null) && obj is Spline spline && spline == this;
         }
 
         /// <summary>ハッシュ値</summary>
