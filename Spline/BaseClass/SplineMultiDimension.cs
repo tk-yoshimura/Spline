@@ -1,5 +1,4 @@
-﻿using Algebra;
-using System;
+﻿using System;
 
 namespace Spline {
 
@@ -27,7 +26,7 @@ namespace Spline {
         public int Dimention { get; private set; }
 
         /// <summary>制御点を設定</summary>
-        public void Set(params Vector[] v) {
+        public void Set(double[,] v) {
             if (v is null) {
                 throw new ArgumentNullException(nameof(v));
             }
@@ -36,24 +35,22 @@ namespace Spline {
         }
 
         /// <summary>制御点を設定</summary>
-        public void Set(Vector[] v, int points) {
+        public void Set(double[,] v, int points) {
             Initialize();
 
             if (v is null) {
                 throw new ArgumentNullException(nameof(v));
             }
 
-            for (int i = 0; i < points; i++) {
-                if (v[i].Dim != Dimention) {
-                    throw new ArgumentException("mismatch dimention", nameof(v));
-                }
+            if (v.GetLength(1) != Dimention) {
+                throw new ArgumentException("mismatch dimention", nameof(v));
             }
 
             double[] s = new double[points];
 
-            for (int i = 0, j; i < Dimention; i++) {
-                for (j = 0; j < points; j++) {
-                    s[j] = v[j][i];
+            for (int i, j = 0; j < points; j++) {
+                for (i = 0; i < Dimention; i++) {
+                    s[j] = v[j, i];
                 }
 
                 this.spline[i].Set(s);
@@ -61,8 +58,8 @@ namespace Spline {
         }
 
         /// <summary>制御点を挿入</summary>
-        public void Insert(int index, Vector new_v) {
-            if (index < 0 || index > Points || new_v.Dim != Dimention) {
+        public void Insert(int index, double[] new_v) {
+            if (index < 0 || index > Points || new_v.Length != Dimention) {
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
@@ -90,36 +87,36 @@ namespace Spline {
         }
 
         /// <summary>補間値</summary>
-        public Vector Value(double t) {
+        public double[] Value(double t) {
             double[] v = new double[Dimention];
 
             for (int i = 0; i < Dimention; i++) {
                 v[i] = spline[i].Value(t);
             }
 
-            return new Vector(v);
+            return v;
         }
 
         /// <summary>補間微分値</summary>
-        public Vector Diff(double t) {
+        public double[] Diff(double t) {
             double[] v = new double[Dimention];
 
             for (int i = 0; i < Dimention; i++) {
                 v[i] = spline[i].Diff(t);
             }
 
-            return new Vector(v);
+            return v;
         }
 
         /// <summary>補間N次微分値</summary>
-        public Vector Diff(double t, uint n) {
+        public double[] Diff(double t, uint n) {
             double[] v = new double[Dimention];
 
             for (int i = 0; i < Dimention; i++) {
                 v[i] = spline[i].Diff(t, n);
             }
 
-            return new Vector(v);
+            return v;
         }
 
         /// <summary>等しいか判定</summary>
