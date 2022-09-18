@@ -145,7 +145,7 @@ namespace Spline {
 
         /// <summary>等しいか判定</summary>
         public override bool Equals(object obj) {
-            return (!(obj is null)) && obj is SplineMultiDimension<SplineType> dimspline && dimspline == this;
+            return (obj is not null) && obj is SplineMultiDimension<SplineType> dimspline && dimspline == this;
         }
 
         /// <summary>ハッシュ値</summary>
