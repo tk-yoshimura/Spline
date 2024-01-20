@@ -12,7 +12,7 @@ namespace Spline {
 
         /// <summary>コンストラクタ</summary>
         public CubicSpline(EndType type = EndType.Open) : base(type) {
-            this.segment_list = new List<CubicSegment>();
+            this.segment_list = [];
         }
 
         /// <summary>制御点を設定</summary>

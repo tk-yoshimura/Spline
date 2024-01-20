@@ -5,12 +5,10 @@ namespace Spline {
         public static double[] Polyploidize(double[] array) {
             const int index_shift = 2;
 
-            if (array == null) {
-                throw new ArgumentNullException(nameof(array));
-            }
+            ArgumentNullException.ThrowIfNull(array);
 
             if (array.Length < 1) {
-                throw new ArgumentException(nameof(array));
+                throw new ArgumentException(null, nameof(array));
             }
 
             int length = array.Length;

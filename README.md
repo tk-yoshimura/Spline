@@ -2,7 +2,7 @@
  Cubic Spline Implementation
 
 ## Requirement
- .NET 6.0
+ .NET 8.0
  
  ## Install
 [Download DLL](https://github.com/tk-yoshimura/Spline/releases)  

@@ -13,7 +13,7 @@ namespace Spline {
         /// <summary>コンストラクタ</summary>
         public Spline(EndType type = EndType.Open) {
             this.EndType = type;
-            this.v = new List<double>();
+            this.v = [];
         }
 
         /// <summary>終端タイプ</summary>
